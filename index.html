@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queens Berry — Wholesale Product Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #132600;
+    --green-mid: #2a4d0f;
+    --parchment: #F5F0E8;
+    --caramel: #C8B89A;
+    --caramel-light: #EDE5D8;
+    --text: #1a1a1a;
+    --text-muted: #6b6355;
+    --white: #ffffff;
+    --card-shadow: 0 2px 8px rgba(19,38,0,0.08);
+    --card-shadow-hover: 0 8px 24px rgba(19,38,0,0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--parchment);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── Sticky nav ── */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--caramel-light);
+  }
+
+  .nav-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .nav-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--green);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+  }
+
+  .nav-links a {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--green);
+    padding: 72px 28px 80px;
+    text-align: center;
+  }
+
+  .hero-logo-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 28px;
+    border: 3px solid rgba(200,184,154,0.4);
+  }
+
+  .hero-logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero p {
+    color: rgba(245,240,232,0.72);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 36px;
+  }
+
+  .hero-cats {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-cat-pill {
+    background: rgba(200,184,154,0.15);
+    border: 1px solid rgba(200,184,154,0.35);
+    color: var(--caramel);
+    font-size: 0.83rem;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s;
+  }
+
+  .hero-cat-pill:hover {
+    background: rgba(200,184,154,0.28);
+    border-color: rgba(200,184,154,0.55);
+  }
+
+  /* ── Catalog ── */
+  .catalog {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  .category-block {
+    padding-top: 60px;
+    scroll-margin-top: 70px;
+  }
+
+  .category-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--caramel);
+  }
+
+  .category-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    color: var(--green);
+  }
+
+  .category-count {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+  }
+
+  /* ── Product card ── */
+  .product-card {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .product-img-wrap {
+    aspect-ratio: 1;
+    background: var(--caramel-light);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px;
+    display: block;
+    transition: transform 0.28s ease;
+  }
+
+  .product-card:hover .product-img-wrap img {
+    transform: scale(1.05);
+  }
+
+  .product-body {
+    padding: 13px 15px 16px;
+  }
+
+  .product-body h3 {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.35;
+  }
+
+  .product-body p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+
+  .product-price {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--green-mid);
+  }
+
+  .product-code {
+    font-size: 0.7rem;
+    color: var(--caramel);
+    font-weight: 500;
+    margin-top: 3px;
+  }
+
+  /* ── States ── */
+  .state-msg {
+    grid-column: 1 / -1;
+    padding: 40px 24px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .state-empty { background: var(--caramel-light); color: var(--text-muted); }
+  .state-error { background: #fdf0ec; color: #7a3020; }
+
+  /* ── Footer ── */
+  footer { background: var(--green); }
+
+  .footer-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 36px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+  }
+
+  .footer-note {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.6);
+    max-width: 400px;
+    text-align: right;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero { padding: 52px 20px 56px; }
+    .catalog { padding: 0 16px 56px; }
+    .nav-inner { padding: 0 16px; }
+    .nav-links { gap: 18px; }
+    .footer-note { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+    html { scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="assets/logo.jpg" alt="Queens Berry" class="nav-logo">
+      <span class="nav-name">Queens Berry</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hair">Hair</a></li>
+      <li><a href="#travel">Travel</a></li>
+      <li><a href="#essentials">Essentials</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-logo-wrap">
+    <img src="assets/logo.jpg" alt="Queens Berry logo">
+  </div>
+  <h1>Stocked with everything your customers need.</h1>
+  <p>Wholesale hair, travel and essential accessories for convenience stores and pharmacies across Malaysia.</p>
+  <div class="hero-cats">
+    <a href="#hair" class="hero-cat-pill">Hair Accessories</a>
+    <a href="#travel" class="hero-cat-pill">Travel Essentials</a>
+    <a href="#essentials" class="hero-cat-pill">Daily Essentials</a>
+  </div>
+</section>
+
+<main class="catalog" id="catalog-root"></main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-brand">Queens Berry</span>
+    <p class="footer-note">This catalog is for product presentation only. Contact us directly to place a wholesale order.</p>
+  </div>
+</footer>
+
+<script>
+  const CATEGORIES = [
+    { id: "hair",       label: "Hair"       },
+    { id: "travel",     label: "Travel"     },
+    { id: "essentials", label: "Essentials" },
+  ];
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [], field = '', inQ = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i], n = text[i+1];
+      if (inQ) {
+        if (c === '"' && n === '"') { field += '"'; i++; }
+        else if (c === '"') inQ = false;
+        else field += c;
+      } else {
+        if (c === '"') inQ = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n' || c === '\r') {
+          if (c === '\r' && n === '\n') i++;
+          row.push(field); rows.push(row); row = []; field = '';
+        } else field += c;
+      }
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(r => r.length > 1 || r[0] !== '');
+  }
+
+  function toObjects(rows) {
+    const headers = rows[0].map(h => h.trim().toLowerCase());
+    return rows.slice(1).map(r => {
+      const o = {};
+      headers.forEach((h, i) => o[h] = (r[i] || '').trim());
+      return o;
+    });
+  }
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function extractCode(filename) {
+    const m = filename.match(/^(\d{8})/);
+    return m ? m[1] : '';
+  }
+
+  function encodePath(filename) {
+    return encodeURIComponent(filename).replace(/%2F/g, '/');
+  }
+
+  function buildCard(p) {
+    const code = extractCode(p.photo);
+    const priceHTML = p.price ? `<div class="product-price">RM ${esc(p.price)}</div>` : '';
+    const codeHTML  = code    ? `<div class="product-code">${esc(code)}</div>` : '';
+    return `
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img
+            src="assets/${encodePath(p.photo)}"
+            alt="${esc(p.name)}"
+            loading="lazy"
+            onerror="this.style.opacity='0';"
+          >
+        </div>
+        <div class="product-body">
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description)}</p>
+          ${priceHTML}
+          ${codeHTML}
+        </div>
+      </div>`;
+  }
+
+  function buildSection(cat, products) {
+    const sec = document.createElement('section');
+    sec.className = 'category-block';
+    sec.id = cat.id;
+    const cards = products.length
+      ? products.map(buildCard).join('')
+      : `<div class="state-msg state-empty">No products in this category yet.</div>`;
+    sec.innerHTML = `
+      <div class="category-heading">
+        <h2>${esc(cat.label)}</h2>
+        <span class="category-count">${products.length} item${products.length !== 1 ? 's' : ''}</span>
+      </div>
+      <div class="product-grid">${cards}</div>`;
+    return sec;
+  }
+
+  async function loadCatalog() {
+    const root = document.getElementById('catalog-root');
+    try {
+      const res = await fetch('products.csv');
+      if (!res.ok) throw new Error(`Could not load products.csv (status ${res.status})`);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length < 2) throw new Error('products.csv appears to be empty.');
+      const products = toObjects(rows);
+      root.innerHTML = '';
+      CATEGORIES.forEach(cat => {
+        const items = products.filter(p =>
+          (p.category || '').toLowerCase() === cat.id.toLowerCase()
+        );
+        root.appendChild(buildSection(cat, items));
+      });
+    } catch (err) {
+      root.innerHTML = `
+        <div class="category-block">
+          <div class="state-msg state-error">
+            <strong>Product catalog couldn't load.</strong><br><br>
+            ${esc(err.message)}<br><br>
+            If you opened this file directly on your computer, that's expected —
+            the catalog loads correctly once the site is live on GitHub Pages.
+          </div>
+        </div>`;
+    }
+  }
+
+  loadCatalog();
+</script>
+</body>
+</html>
